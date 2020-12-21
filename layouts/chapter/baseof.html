@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+    {{- partial "site/head.html" . -}}
+    <body>
+        {{- partial "site/header.html" . -}}
+        <main id="content">
+        {{- block "main" . }}{{- end }}
+        </main>
+        {{- partial "site/footer.html" . -}}
+    </body>
+</html>

@@ -1,0 +1,24 @@
+{{ define "main" }}
+<article class="game">
+    <header>
+        <h1>{{ .Title }}</h1>
+        <!-- <p>{{ .IsDescendant (.GetPage "/games") }}</p> -->
+        <blockquote>{{ .Description | markdownify }}</blockquote>
+        {{- partial "games/nav.html" . -}}
+    </header>
+    <figure>
+        <figcaption>Details:</figcaption>
+        <dl>
+            <dt>Team:</dt>{{ range .Params.team }}<dd>{{ . }}</dd>{{ end }}
+            <dt>Tags:</dt>{{ range .Params.tags }}<dd>{{ . }}</dd>{{ end }}
+            <dt>Price:</dt><dd>{{ .Params.price }}</dd>
+        </dl>
+    </figure>
+    {{ .Content }}
+    <footer>
+        {{ range .Pages }}
+        <a href="{{ .Permalink }}">{{ .Title }}</a>
+        {{ end }}
+    </footer>
+</article>
+{{ end }}

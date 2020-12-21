@@ -1,0 +1,62 @@
+@import 'global-variables';
+
+@mixin shortcode-details {
+  position: relative;
+  width: 100%;
+
+  summary {
+    color: #fff;
+    font-weight: 500;
+    margin-top: 15px;
+    padding: 10px 10px;
+  }
+
+  p {
+    padding: 10px;
+    display: block;
+    font-size: 1rem;
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+    color: #666;
+  }
+}
+
+details.mechanical {
+  @include shortcode-details();
+  background: #FFF2DB;
+  summary {
+    background-color: #F0B37E;
+  }
+}
+
+details.warning {
+  @include shortcode-details();
+  background: #FAE2E2;
+  summary {
+    background-color: rgba(217, 83, 79, 0.8);
+  }
+}
+
+details.note {
+  @include shortcode-details();
+  background: #E7F2FA;
+  summary {
+    background-color: #6AB0DE;
+  }
+}
+
+details.inworld {
+  @include shortcode-details();
+  background: #E7F2FA;
+  summary {
+    background-color: rgb(167, 107, 190);
+  }
+}
+
+details.example {
+  @include shortcode-details();
+  background: #E6F9E6;
+  summary {
+    background-color: rgba(92, 184, 92, 0.8);
+  }
+}

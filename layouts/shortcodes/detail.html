@@ -1,0 +1,8 @@
+{{- $type := .Get 0 -}}
+{{- $title := .Get 1 -}}
+{{- $anchor := urlize $title -}}
+
+<details class="{{ $type }}">
+  <summary id="{{ $anchor }}">{{ $title }}</summary>
+  {{ .Inner | markdownify }}
+</details>

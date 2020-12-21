@@ -1,0 +1,25 @@
+{{- $site := .Site -}}
+<header>
+  <nav class="site-nav" >
+    <ul>
+    <li><a href="/" title="home" class="home">{{ .Site.Title }}</a></li>
+    {{ range .Site.Menus.social }}
+    {{/*  Code for socials?  */}}
+    {{ end }}
+    
+      {{- range .Site.Menus.main -}}
+        <li>
+          <a href="{{ .URL }}" title="{{ .Name }}">{{ .Name }}</a>
+          {{- if eq .Name "Games" -}}
+          <ul>
+          {{- range ($site.GetPage .URL).Pages -}}
+            <li><a href="{{ .RelPermalink }}" title="{{ .Title }}">{{ .Title }}</a></li>
+          {{- end -}}
+          </ul>
+          {{- end -}}
+        </li>
+      {{- end -}}
+    </ul>
+  </nav>
+  {{ range .Site.Menus.main }} {{ end }}
+</header>

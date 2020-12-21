@@ -1,0 +1,57 @@
+{{ $name    := .Get 0 }}
+{{ $caption := .Get 1 }}
+
+{{ $url := printf "static/tables/%s.csv" $name}}
+{{ $sep := "," }}
+{{ $tabledata := getCSV $sep $url }}
+
+{{ $id := printf "rolltable-%s" (replace $name '/' '-')}}
+
+{{ $headers := first 1 $tabledata}}
+{{ $headers := index $headers 0}}
+
+{{ $prefixes := after 1 $tabledata | first 1 }}
+{{ if lt 2 (len $prefixes) }}
+  {{ $.Scratch.Set "prefixes" (index $prefixes 0) }}
+{{ else }}
+  {{ $.Scratch.Set "prefixes" (index $prefixes 0 | after 1) }}
+{{ end }}
+
+<table class="rolltable" id="{{ $id }}">
+  <caption>
+    <p class="table-caption">
+      <button onclick="toggleTableCollapse({{ $name }})" id="{{ $id }}-collapser"><i class="fas fa-caret-down"></i></button>
+      {{$caption}} Click on the <strong>Result</strong> header to roll automatically. Click on any other header to reroll for that column.
+    </p>
+    <p class="result" id="result-{{ $name }}"></p>
+  </caption>
+  <thead>
+    <tr>
+    {{ $.Scratch.Set "columncount" 0 }}
+    {{ range $headers }}
+    {{ $column := $.Scratch.Get "columncount" }}
+      {{if eq "result" (lower .) }}
+      <th onClick="getRandomEntries({{$name}})">{{ . }}</th>
+      {{else}}
+      <th onClick="getRandomEntry({{$name}},{{$column}})">{{ . }}</th>
+      {{end}}
+    {{ $.Scratch.Set "columncount" (add $column 1) }}
+    {{ end }}
+    </tr>
+  </thead>
+  <tbody>
+  {{ $.Scratch.Set "rowcount" 1 }}
+  {{ range $data := after 2 $tabledata }}
+  {{ $row := $.Scratch.Get "rowcount" }}
+  {{ $.Scratch.Set "columncount" 0 }}
+    <tr>
+      {{ range $data }}
+      {{ $column := $.Scratch.Get "columncount" }}
+      <td onClick="selectEntry({{$name}},{{$.Scratch.Get "rowcount"}},{{$column}})" data-prefix="{{index ($.Scratch.Get "prefixes") (add $column -1)}}" >{{ . }}</td>
+      {{ $.Scratch.Set "columncount" (add $column 1) }}
+      {{ end }}
+    </tr>
+  {{ $.Scratch.Set "rowcount" (add $row 1) }}
+  {{ end }}
+  </tbody>
+</table>

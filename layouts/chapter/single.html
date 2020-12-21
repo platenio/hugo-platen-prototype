@@ -1,0 +1,9 @@
+{{ define "main" }}
+<article>
+  <header>
+    <h1>{{ .Title }}</h1>
+    {{- partial "games/nav.html" . -}}
+  </header>
+  {{ .Content }}
+</article>
+{{ end }}

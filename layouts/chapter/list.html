@@ -1,0 +1,14 @@
+{{ define "main" }}
+<article>
+    <header>
+        <h1>{{ .Title }}</h1>
+        {{- partial "games/nav.html" . -}}
+    </header>
+    {{ .Content }}
+    <ul>
+        {{ range .Pages }}
+        <li><strong><a href="{{ .Permalink }}">{{ .Title }}</a>:</strong> {{ .Description }}</li>
+        {{ end }}
+    </ul>
+</article>
+{{ end }}

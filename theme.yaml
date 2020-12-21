@@ -1,0 +1,11 @@
+name: Platen
+license: MIT
+licenselink: 'https://github.com/platenio/hugo-platen/blob/master/LICENSE'
+description: 'Platen core theme for Hugo: build websites for digital tabletop rpgs'
+homepage: 'http://platen.io/'
+tags: []
+features: []
+min_version: 0.1.0
+author:
+  name: Michael T Lombardi
+  homepage: 'https://twitter.com/trebuchetops'

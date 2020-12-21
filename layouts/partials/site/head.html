@@ -1,0 +1,32 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{{ if not .IsHome }}{{ with .Title }}{{ . }} | {{ end }}{{ end }}{{ .Site.Title }}</title>
+  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{end }}">
+  <link rel="canonical" href="{{ .Permalink }}" />
+  <!-- Social Sharing -->
+  {{ template "_internal/opengraph.html" . }}
+  {{ template "_internal/twitter_cards.html" . }}
+  <!-- Site SCSS -->
+  {{ $style := resources.Get "scss/main.scss" | resources.ToCSS | fingerprint}}
+  <link rel="stylesheet" href="{{ $style.Permalink }}">
+  <!-- Game Override SCSS -->
+  {{- $currentNode := . -}}
+  {{- range (.GetPage .Section).Pages -}}
+  {{- if and (.IsAncestor $currentNode) (findRE "games" .RelPermalink) -}}
+  {{- $currentNode.Scratch.Set "game" . -}}
+  {{- end -}}
+  {{- end -}}
+  {{- $game := $currentNode.Scratch.Get "game" -}}
+  {{ with $game }}
+  {{- $gameScssPath := lower (printf "scss/%v.scss" $game.Title) -}}
+  {{ with resources.Get $gameScssPath }}
+  {{ $gameStyle := resources.Get $gameScssPath | resources.ToCSS | fingerprint }}
+  <link rel="stylesheet" href="{{ $gameStyle.Permalink }}">
+  {{ end }}
+  {{ end }}
+  {{/*  Must be the final item in the head  */}}
+  {{ if not (in (string .Site.BaseURL) "localhost") }}
+  {{ template "_internal/google_analytics_async.html" . }}
+  {{ end }}
+</head>

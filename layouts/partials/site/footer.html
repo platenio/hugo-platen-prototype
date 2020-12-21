@@ -1,0 +1,8 @@
+<footer class="footer">
+  <ul>
+    {{ range .Site.Menus.footer }}<li><a href="{{ .URL }}">{{ .Name }}</a></li>{{ end }}
+  </ul>
+  <small>&copy; Copyright {{ .Site.Params.copyright }}</small>
+  <script src="{{"js/dozenal.js"| relURL}}{{ if not .Site.Params.disableAssetsBusting }}?{{ now.Unix }}{{ end }}"></script>
+  <script src="{{"js/rolltable.js"| relURL}}{{ if not .Site.Params.disableAssetsBusting }}?{{ now.Unix }}{{ end }}"></script>
+</footer>
