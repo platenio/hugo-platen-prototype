@@ -4,8 +4,7 @@
   </ul>
   <small>&copy; Copyright {{ .Site.Params.copyright }}</small>
   <!-- Short Codes -->
-  <script src="{{"js/dozenal.js"| relURL}}{{ if not .Site.Params.disableAssetsBusting }}?{{ now.Unix }}{{ end }}"></script>
-  <script src="{{"js/rolltable.js"| relURL}}{{ if not .Site.Params.disableAssetsBusting }}?{{ now.Unix }}{{ end }}"></script>
+  <script src="{{"js/shortcodes/rolltable.js"| relURL}}{{ if not .Site.Params.disableAssetsBusting }}?{{ now.Unix }}{{ end }}"></script>
   <!-- Site Navigation -->
   <script src="https://cdn.jsdelivr.net/npm/accessible-menu/dist/accessibleMenu.js"></script>
   <script>
