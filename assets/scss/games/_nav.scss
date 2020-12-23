@@ -1,3 +1,41 @@
 nav.game-nav {
-  background-color: #f2f2f2;
+  // Container for the game sidebar nav
+  header {
+    // Container for the header information, separate from in-game navigation
+    a {
+      h1 {
+        // The game's title at the top of the navigation menu
+      }
+      img {
+        // The game's logo
+      }
+    }
+  }
+  ul {
+    // Container for the game's chapters, unordered
+    li {
+      // Container for each chapter
+      a {
+        // Link to each chapter
+      }
+      ul {
+        // container for the game's subchapters, unordered
+        li {
+          // Container for each subchapter
+          a {
+            // Link to each subchapter
+          }
+        }
+      }
+    }
+  }
+  ul.toc {
+    // Container for the table of contents for the active page
+    li {
+      // Container for each entry in the table of contents
+      a {
+        // Link to each entry in the table of contents
+      }
+    }
+  }
 }

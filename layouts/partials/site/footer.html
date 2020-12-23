@@ -3,6 +3,37 @@
     {{ range .Site.Menus.footer }}<li><a href="{{ .URL }}">{{ .Name }}</a></li>{{ end }}
   </ul>
   <small>&copy; Copyright {{ .Site.Params.copyright }}</small>
-  <script src="{{"js/dozenal.js"| relURL}}{{ if not .Site.Params.disableAssetsBusting }}?{{ now.Unix }}{{ end }}"></script>
-  <script src="{{"js/rolltable.js"| relURL}}{{ if not .Site.Params.disableAssetsBusting }}?{{ now.Unix }}{{ end }}"></script>
+  <!-- Short Codes -->
+  <script src="{{"js/shortcodes/rolltable.js"| relURL}}{{ if not .Site.Params.disableAssetsBusting }}?{{ now.Unix }}{{ end }}"></script>
+  <!-- Site Navigation -->
+  <script src="https://cdn.jsdelivr.net/npm/accessible-menu/dist/accessibleMenu.js"></script>
+  <script>
+    const navs = document.querySelectorAll("nav");
+    const menuSettings = {
+      menuItemSelector: ".menu-item",
+      submenuItemSelector: ".menu-item.dropdown",
+      submenuToggleSelector: ".dropdown-toggle",
+      submenuSelector: ".menu.dropdown",
+    };
+
+    navs.forEach(nav => {
+      const menuElement = nav.querySelector(".menu");
+
+      if (nav.id === "site-nav") {
+        const controllerElement = nav.querySelector(".menu-toggle");
+        const menu = new AccessibleMenu.DisclosureMenu({
+          menuElement,
+          ...menuSettings,
+          controllerElement,
+          containerElement: nav
+        });
+      } else {
+        const menu = new AccessibleMenu.DisclosureMenu({
+          menuElement,
+          ...menuSettings
+        });
+      }
+    });
+
+  </script>
 </footer>

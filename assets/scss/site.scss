@@ -4,6 +4,28 @@
 @import 'site/rolltable';
 @import 'site/details';
 
+html {
+  font-family: $font-stack;
+  font-size: 1rem;
+  line-height: 1.2rem;
+}
+
 body {
-  font: 100% $font-stack;
+  margin: 0;
+}
+
+header,
+footer {
+  width: 100%;
+}
+
+main {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 0 2rem;
+
+  @media screen and (min-width: 1070px) {
+    width: 80%;
+  }
 }
