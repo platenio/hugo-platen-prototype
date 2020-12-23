@@ -1,25 +1,31 @@
 {{- $site := .Site -}}
-<header>
-  <nav class="site-nav" >
-    <ul>
-    <li><a href="/" title="home" class="home">{{ .Site.Title }}</a></li>
-    {{ range .Site.Menus.social }}
-    {{/*  Code for socials?  */}}
-    {{ end }}
-    
+<header id="site-header">
+  <nav id="site-nav" aria-label="Site Navigation">
+    <span class="branding" aria-hidden="true"><a href="/" title="Home">{{ .Site.Title }}</a></span>
+    <button href="" class="menu-toggle">☰<span class="visually-hidden"> Toggle Menu</span></button>
+    {{/*  <h1><a href="/" title="Home">{{ .Site.Title }}</a></h1>  */}}
+    {{/*  <button type="submit" id="site-nav-toggle">☰</button>  */}}
+    <ul id="site-nav-list" class="menu">
       {{- range .Site.Menus.main -}}
-        <li>
-          <a href="{{ .URL }}" title="{{ .Name }}">{{ .Name }}</a>
-          {{- if eq .Name "Games" -}}
-          <ul>
+        {{- if eq .Name "Games" -}}
+        <li class="menu-item dropdown">
+          <a href="#" title="{{ .Name }}" class="menu-link dropdown-toggle">{{ .Name }}</a>
+          <ul class="menu dropdown">
+            <li class="menu-item">
+              <a href="{{ .URL }}" title="All" class="menu-link dropdown-toggle">All</a>
+            </li>
           {{- range ($site.GetPage .URL).Pages -}}
-            <li><a href="{{ .RelPermalink }}" title="{{ .Title }}">{{ .Title }}</a></li>
+            <li class="menu-item">
+              <a href="{{ .RelPermalink }}" title="{{ .Title }}" class="menu-link">{{ .Title }}</a>
+            </li>
           {{- end -}}
           </ul>
-          {{- end -}}
-        </li>
+        {{- else -}}
+          <li class="menu-item">
+            <a href="{{ .URL }}" title="{{ .Name }}" class="menu-link">{{ .Name }}</a>
+          </li>
+        {{- end -}}
       {{- end -}}
     </ul>
   </nav>
-  {{ range .Site.Menus.main }} {{ end }}
 </header>
