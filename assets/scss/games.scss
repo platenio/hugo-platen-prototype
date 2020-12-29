@@ -1,1 +1,39 @@
-@import 'games/nav'
+@import 'games/nav';
+@import 'site/global-variables';
+@import 'site/icons';
+@import 'site/rolltable';
+@import 'site/details';
+
+html {
+  font-family: $font-stack;
+  font-size: 1rem;
+  line-height: 1.2rem;
+}
+
+body {
+  margin: 0;
+}
+
+header,
+footer {
+  width: 100%;
+}
+
+main {
+  width: 100%;
+  min-height: 100vh;
+  padding-top: $site-nav-height;
+
+  @media screen and (min-width: 1070px) {
+    width: 80%;
+  }
+  article {
+    @media screen and (min-width: 1070px) {
+      padding-left: 22em;
+    }
+    @media screen and (max-width: 1069px) {
+      padding-top: 3em;
+    }
+    width: 90%;
+  }
+}

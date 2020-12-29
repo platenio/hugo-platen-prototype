@@ -1,8 +1,10 @@
 {{ define "main" }}
-<article>
+<aside class="game-nav">
+    {{- partial "games/nav.html" . -}}
+</aside>
+<article class="game">
     <header>
         <h1>{{ .Title }}</h1>
-        {{- partial "games/nav.html" . -}}
     </header>
     {{ .Content }}
     <ul>

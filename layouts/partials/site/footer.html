@@ -15,13 +15,14 @@
       submenuToggleSelector: ".dropdown-toggle",
       submenuSelector: ".menu.dropdown",
     };
+    const whitelistNavs = ["site-nav", "game-nav"]
 
     navs.forEach(nav => {
       const menuElement = nav.querySelector(".menu");
 
-      if (nav.id === "site-nav") {
+      if (whitelistNavs.includes(nav.id)) {
         const controllerElement = nav.querySelector(".menu-toggle");
-        const menu = new AccessibleMenu.DisclosureMenu({
+        const menu = new AccessibleMenu.Menubar({
           menuElement,
           ...menuSettings,
           controllerElement,
