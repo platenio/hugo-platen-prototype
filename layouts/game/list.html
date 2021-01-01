@@ -1,10 +1,12 @@
 {{ define "main" }}
 <article class="game">
+    <aside class="game-nav">
+        {{- partial "games/nav.html" . -}}
+    </aside>
     <header>
         <h1>{{ .Title }}</h1>
         <!-- <p>{{ .IsDescendant (.GetPage "/games") }}</p> -->
         <blockquote>{{ .Description | markdownify }}</blockquote>
-        {{- partial "games/nav.html" . -}}
     </header>
     <figure>
         <figcaption>Details:</figcaption>

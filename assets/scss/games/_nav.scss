@@ -1,41 +1,112 @@
-nav.game-nav {
-  // Container for the game sidebar nav
-  header {
-    // Container for the header information, separate from in-game navigation
-    a {
-      h1 {
-        // The game's title at the top of the navigation menu
-      }
-      img {
-        // The game's logo
+aside.game-nav {
+  nav {
+    // Container for the game sidebar nav
+    header {
+      // Container for the header information, separate from in-game navigation
+      a {
+        h1 {
+          // The game's title at the top of the navigation menu
+        }
+        img {
+          // The game's logo
+        }
       }
     }
-  }
-  ul {
-    // Container for the game's chapters, unordered
-    li {
-      // Container for each chapter
-      a {
-        // Link to each chapter
-      }
-      ul {
-        // container for the game's subchapters, unordered
-        li {
-          // Container for each subchapter
-          a {
-            // Link to each subchapter
+    ul {
+      // Container for the game's chapters, unordered
+      li {
+        // Container for each chapter
+        a {
+          // Link to each chapter
+        }
+        ul {
+          // container for the game's subchapters, unordered
+          li {
+            // Container for each subchapter
+            a {
+              // Link to each subchapter
+            }
           }
         }
       }
     }
-  }
-  ul.toc {
-    // Container for the table of contents for the active page
-    li {
-      // Container for each entry in the table of contents
-      a {
-        // Link to each entry in the table of contents
+    ul.toc {
+      // Container for the table of contents for the active page
+      li {
+        // Container for each entry in the table of contents
+        a {
+          // Link to each entry in the table of contents
+        }
       }
+    }
+    ul[role="menubar"] {
+      margin: 10px;
+      padding: 10px;
+      font-size: 110%;
+      list-style: none;
+      background-color: #eee;
+    }
+    
+    ul[role="menubar"] [role="menuitem"],
+    ul[role="menubar"] [role="separator"] {
+      padding: 0.25em;
+      background-color: #eee;
+      border: 2px solid #eee;
+    }
+    
+    ul[role="menubar"] [role="separator"] {
+      padding-top: 0.15em;
+      background-image: url('../images/separator.png');
+      background-position: center;
+      background-repeat: repeat-x;
+    }
+    
+    ul[role="menubar"] [role="menuitem"]:focus,
+    ul[role="menubar"] [role="menuitem"]:hover,
+    ul[role="menubar"] [role="separator"]:focus,
+    ul[role="menubar"] [role="separator"]:hover {
+      background-color: black;
+      color: white;
+    }
+    
+    ul[role="menubar"] a[role="menuitem"] {
+      text-decoration: none;
+      color: black;
+    }
+    
+    ul[role="menubar"] li {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    
+    ul[role="menubar"] > li {
+      display: inline;
+      position: relative;
+    }
+    
+    ul[role="menubar"] > li > a::after {
+      content: url('../images/down-arrow-brown.png');
+      padding-left: 0.25em;
+    }
+    
+    ul[role="menubar"] ul[role="menu"] {
+      display: none;
+      position: absolute;
+      top: -2px;
+      left: 0;
+      margin: 0;
+      padding: 0;
+    }
+    
+    ul[role="menubar"] ul[role="menu"] li a {
+      display: block;
+      width: 10em;
+    }
+    
+    ul[role="menubar"] ul[role="menu"] a[aria-haspopup="true"]::after {
+      content: url('../images/right-arrow-brown.png');
+      padding-right: 2em;
     }
   }
 }
