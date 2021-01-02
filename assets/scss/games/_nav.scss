@@ -1,5 +1,3 @@
-@import "variables";
-
 aside.game-nav {
   margin-left: 0;
   left: 0;
@@ -20,8 +18,8 @@ aside.game-nav {
     height: 100%;
   }
   nav#game-nav {
-    background-color: $game-primary-color;
-    color: $game-primary-color-text;
+    background-color: $primary-color;
+    color: $primary-color-text;
     padding-left: 1em;
 
     @media screen and (min-width: 1070px) {
@@ -29,7 +27,7 @@ aside.game-nav {
     }
 
     a {
-      color: $game-primary-color-text;
+      color: $primary-color-text;
       text-decoration: none;
     }
     /* Force accessible focus state */
@@ -37,7 +35,7 @@ aside.game-nav {
       box-sizing: content-box;
 
       &:focus {
-        background-color: $game-primary-color-light !important;
+        background-color: $primary-color-light !important;
       }
     }
 
@@ -52,8 +50,8 @@ aside.game-nav {
     }
 
     button {
-      color: $game-primary-color-text;
-      background-color: $game-primary-color;
+      color: $primary-color-text;
+      background-color: $primary-color;
     }
 
     > .menu-toggle {
@@ -108,7 +106,7 @@ aside.game-nav {
     }
 
     .menu {
-      background-color: $game-primary-color;
+      background-color: $primary-color;
       list-style: none;
       padding: 0;
       margin: 0;
@@ -134,18 +132,18 @@ aside.game-nav {
       .menu-link,
       .menu-toggle {
         display: block;
-        background-color: $game-primary-color;
+        background-color: $primary-color;
         text-decoration: none;
         border: none;
         padding: 1rem 2rem;
 
         &:hover {
-          background-color: $game-primary-color-hover;
+          background-color: $primary-color-hover;
         }
       }
 
       .menu-link:active {
-        background-color: $game-primary-color-light;
+        background-color: $primary-color-light;
       }
 
       .menu-item {

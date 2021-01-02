@@ -1,8 +1,7 @@
-@import 'site/global-variables';
-@import 'site/icons';
 @import 'site/nav';
-@import 'site/rolltable';
+@import 'site/icons';
 @import 'site/details';
+@import 'site/rolltable';
 
 html {
   font-family: $font-stack;
@@ -22,7 +21,7 @@ footer {
 main {
   width: 100%;
   min-height: 100vh;
-  padding-top: 6em;
+  padding-top: $site-nav-height;
 
   @media screen and (min-width: 1070px) {
     width: 80%;

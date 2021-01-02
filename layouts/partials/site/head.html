@@ -10,25 +10,25 @@
   <!-- Font Awesome -->
   <script src="https://use.fontawesome.com/a5e493d1ed.js"></script>
   <!-- Site SCSS -->
-  {{ $style := resources.Get "scss/main.scss" | resources.ToCSS | fingerprint}}
+  {{- $style := resources.Get "scss/main.scss" | resources.ExecuteAsTemplate "style.main.scss" . | resources.ToCSS | fingerprint -}}
   <link rel="stylesheet" href="{{ $style.Permalink }}">
   <!-- Game Override SCSS -->
   {{- $currentNode := . -}}
   {{- range (.GetPage .Section).Pages -}}
-  {{- if and (.IsAncestor $currentNode) (findRE "games" .RelPermalink) -}}
-  {{- $currentNode.Scratch.Set "game" . -}}
-  {{- end -}}
+    {{- if and (.IsAncestor $currentNode) (findRE "games" .RelPermalink) -}}
+      {{- $currentNode.Scratch.Set "game" . -}}
+    {{- end -}}
   {{- end -}}
   {{- $game := $currentNode.Scratch.Get "game" -}}
   {{ with $game }}
-  {{- $gameScssPath := lower (printf "scss/%v.scss" $game.Title) -}}
-  {{ with resources.Get $gameScssPath }}
-  {{ $gameStyle := resources.Get $gameScssPath | resources.ToCSS | fingerprint }}
-  <link rel="stylesheet" href="{{ $gameStyle.Permalink }}">
-  {{ end }}
+    {{- $gameScssPath := lower (printf "scss/%v.scss" $game.Title) -}}
+    {{ with resources.Get $gameScssPath }}
+      {{ $gameStyle := resources.Get $gameScssPath | resources.ToCSS | fingerprint }}
+      <link rel="stylesheet" href="{{ $gameStyle.Permalink }}">
+    {{ end }}
   {{ end }}
   {{/*  Must be the final item in the head  */}}
   {{ if not (in (string .Site.BaseURL) "localhost") }}
-  {{ template "_internal/google_analytics_async.html" . }}
+    {{ template "_internal/google_analytics_async.html" . }}
   {{ end }}
 </head>
