@@ -91,8 +91,8 @@ function toggleTableCollapse(tableName) {
 
   // Toggle the button view, which is a font-awesome icon declaration
   if (collapser.firstElementChild.className.match("down")) {
-    collapser.firstElementChild.className = "fas fa-caret-right";
+    collapser.firstElementChild.className = "fa fa-caret-right";
   } else {
-    collapser.firstElementChild.className = "fas fa-caret-down";
+    collapser.firstElementChild.className = "fa fa-caret-down";
   }
 }

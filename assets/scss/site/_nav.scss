@@ -1,11 +1,9 @@
-@import 'global-variables';
-
-
 header#site-header {
   position: fixed;
   top: 0;
   margin-top: 0;
   padding-top: 0;
+  z-index: 2;
   a {
     color: $primary-color-text;
     text-decoration: none;
@@ -19,6 +17,7 @@ header#site-header {
     }
   }
   nav {
+    height: $site-nav-height;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

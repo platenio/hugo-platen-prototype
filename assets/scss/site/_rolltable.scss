@@ -1,42 +1,41 @@
-@import 'global-variables';
-
 table.rolltable {
-  width: 100%
-}
-table.rolltable th {
-  text-align: center;
-  font-weight: bold;
-  background-color: $primary-color;
-  color: #fff;
-}
-table.rolltable th:hover, table.rolltable td:hover {
-  background-color: $primary-color-hover;
-}
-table.rolltable td {
-  text-align: center;
-  border: 0;
-}
+  width: 100%;
+  th {
+    text-align: center;
+    font-weight: bold;
+    background-color: $primary-color;
+    color: $primary-color-text;
+  }
+  th:hover,
+  td:hover {
+    background-color: $primary-color-hover;
+    color: $primary-color-text;
+  }
+  td {
+    text-align: center;
+    border: 0;
+    &.selected {
+      background-color: $primary-color;
+      color: $primary-color-text;
+      font-weight: bold;
+    }
+  }
+  tr:nth-child(even) {
+    background-color: $primary-color-light;
+  }
 
-table.rolltable td.selected {
-  background-color: $primary-color;
-  color: #fff;
-  font-weight: bold;
-}
-table.rolltable tr:nth-child(even) {
-  background-color: $primary-color-light;
-}
-
-table.rolltable caption button {
-  padding: 5px;
-  color: $primary-color-hover;
-  float: left;
-  display: inline-block;
-  left: 10px;
-}
-
-table.rolltable caption p.table-caption {
-  background: #EEEEEE;
-  font-style: italic;
-  font-size: 0.75rem;
-  display: flow-root;
+  caption {
+    button {
+      padding: 5px;
+      color: $primary-color-hover;
+      float: left;
+      left: 10px;
+    }
+    p.table-caption {
+      background: #eeeeee;
+      font-style: italic;
+      font-size: 0.75rem;
+      display: flow-root;
+    }
+  }
 }

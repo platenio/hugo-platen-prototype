@@ -1,88 +1,89 @@
-<nav class="game-nav">
-{{- $currentNode := . -}}
-  {{/* Find the current game so only that game's nav menu is displayed when selected*/}}
-  {{- range (.GetPage .Section).Pages -}}
-  {{- if .IsAncestor $currentNode -}}{{- $currentNode.Scratch.Set "game" . -}}{{- end -}}
-  {{- end -}}
-  {{- $game := $currentNode.Scratch.Get "game" -}}
-  <header><a href="{{ $game.RelPermalink }}"><img src="{{ $game.Params.logo }}"/><h1>{{ $game.Title }}</h1></a></header>
-  {{ template "section-tree-nav" dict "sect" $game "currentnode" $currentNode "game" $game -}}
-  <footer></footer>
+{{- $activeNode := . -}}
+{{/* Find the current game so only that game's nav menu is displayed when selected*/}}
+{{- range (.GetPage .Section).Pages -}}
+  {{- if .IsAncestor $activeNode -}}{{- $activeNode.Scratch.Set "game" . -}}{{- end -}}
+{{- end -}}
+{{- $game := $activeNode.Scratch.Get "game" -}}
+
+<nav id="game-nav" aria-label="Game Navigation">
+  {{ template "game-nav-menu" dict "activeNode" $activeNode "game" $game -}}
+  <footer>
+    <script>
+      var gameNavButton = document.querySelector('nav#game-nav > button');
+      var gameNavAside = document.querySelector('aside.game-nav');
+      gameNavButton.addEventListener("click", function(){
+        if (this.ariaExpanded === "true") {
+          gameNavAside.classList.add("wide");
+        } else {
+          gameNavAside.classList.remove("wide");
+        }
+      });
+    </script>
+  </footer>
 </nav>
 
+{{- define "game-nav-menu" -}}
+  {{- $activeNode := .activeNode -}}
+  {{- $game       := .game -}}
+  {{- with $game -}}
+    {{/* Combine child pages and sections to iterate over */}}
+    {{- .Scratch.Set "children" .Pages -}}
+    {{- if .Sections -}}
+      {{- .Scratch.Set "children" (.Pages | union .Sections) -}}
+    {{- end -}}
+    {{ $children := (.Scratch.Get "children") }}
+    <button href="" class="menu-toggle"><i class="fa fa-book"></i><span class="visually-hidden"> Toggle Game Menu</span></button>
+    <span class="branding" aria-hidden="true"><a href="{{ .RelPermalink }}" title="{{ .Title }}">{{ .Title }}</a></span>
+    <ul id="game-nav-list" class="menu">
+      {{- range $children.ByWeight -}}
+        {{ template "game-nav-item" dict "activeNode" $activeNode "game" $game "nodeToProcess" . }}
+      {{- end -}}
+    </ul>
+  {{- end -}}
+{{- end -}}
 
-{{ define "section-tree-nav" }}
-{{ $currentNode := .currentnode }}
-{{ $game := .game}}
-{{ $currentFileUniqueID := "" }}
-{{ with $currentNode.File }}{{ $currentFileUniqueID = .UniqueID }}{{ end }}
-{{ with .sect }}
-  {{ $isActivePage := eq $currentNode.Title .Title }}
-  {{ $isPage       := eq .Kind "page" }}
-  {{ $isGameRoot   := eq $game.Title .Title }}
-  {{ if and .IsSection (or (not .Params.hidden) $.showhidden) }}
-    {{ safeHTML .Params.head }}
-    {{ if not $isGameRoot}} {{/* We need to strip the list item*/}}
-    <li><a href="{{ .RelPermalink }}">{{  .Title }}</a>
-      {{ $numberOfPages := (add (len .Pages) (len .Sections)) }}
-      {{ if ne $numberOfPages 0 }}
-        {{ if eq .Params.navlist "ordered"}}
-          <ol>
-            {{ $currentNode.Scratch.Set "pages" .Pages }}
-            {{ if .Sections}}
-              {{ $currentNode.Scratch.Set "pages" (.Pages | union .Sections) }}
-            {{ end }}
-            {{ $pages := ($currentNode.Scratch.Get "pages") }}
-            {{ range $pages.ByWeight }}
-              {{ template "section-tree-nav" dict "sect" . "currentnode" $currentNode "game" $game }}
-            {{ end }}
-          </ol>
-        {{ else }}
-          <ul>
-            {{ $currentNode.Scratch.Set "pages" .Pages }}
-            {{ if .Sections}}
-              {{ $currentNode.Scratch.Set "pages" (.Pages | union .Sections) }}
-            {{ end }}
-            {{ $pages := ($currentNode.Scratch.Get "pages") }}
-            {{ range $pages.ByWeight }}
-              {{ template "section-tree-nav" dict "sect" . "currentnode" $currentNode "game" $game }}
-            {{ end }}
-          </ul>
-        {{ end }}
-      {{ end }}
-    </li>
-    {{ else }}
-    {{ $numberOfPages := (add (len .Pages) (len .Sections)) }}
-      {{ if ne $numberOfPages 0 }}
-        {{ if eq .Params.navlist "ordered"}}
-          <ol>
-            {{ $currentNode.Scratch.Set "pages" .Pages }}
-            {{ if .Sections}}
-              {{ $currentNode.Scratch.Set "pages" (.Pages | union .Sections) }}
-            {{ end }}
-            {{ $pages := ($currentNode.Scratch.Get "pages") }}
-            {{ range $pages.ByWeight }}
-              {{ template "section-tree-nav" dict "sect" . "currentnode" $currentNode "game" $game }}
-            {{ end }}
-          </ol>
-        {{ else }}
-          <ul>
-            {{ $currentNode.Scratch.Set "pages" .Pages }}
-            {{ if .Sections}}
-              {{ $currentNode.Scratch.Set "pages" (.Pages | union .Sections) }}
-            {{ end }}
-            {{ $pages := ($currentNode.Scratch.Get "pages") }}
-            {{ range $pages.ByWeight }}
-              {{ template "section-tree-nav" dict "sect" . "currentnode" $currentNode "game" $game }}
-            {{ end }}
-          </ul>
-        {{ end }}
-      {{ end }}
-    {{ end }}
-  {{ else }}
-    <li><a href="{{ .RelPermalink}}">{{ .Title}}</a>
-      {{ if and $isActivePage $isPage }}{{ .TableOfContents }}{{ end }}
-    </li>
-  {{ end }}
-  {{ end }}
-{{ end }}
+{{- define "game-nav-item" -}}
+  {{- $activeNode := .activeNode -}}
+  {{- $game       := .game -}}
+  {{- with .nodeToProcess -}}
+    {{- $isActivePage  := eq $activeNode.Title .Title -}}
+    {{- $isPage        := eq .Kind "page" -}}
+    {{- $numberOfPages := (add (len .Pages) (len .Sections)) -}}
+    {{/* Build TOC */}}
+      {{/* Strip uneccesary nav*/}}
+      {{- $toc    := .TableOfContents | replaceRE `<nav id="TableOfContents">` "" | replaceRE "</nav>" "" -}}
+      {{/* Add menu dropdown classes to ul*/}}
+      {{- $topTOC := printf "<ul class=%v>" `"menu dropdown"` -}}
+      {{- $toc    := $toc | replaceRE "<ul>" $topTOC -}}
+      {{/* Add menu-item class to li*/}}
+      {{- $toc    := $toc | replaceRE "<li>" `<li class="menu-item">` -}}
+      {{/* Add menu-link class to a*/}}
+      {{- $toc    := $toc | replaceRE `<a href=?(".*")>` `<a href=$1 class="menu-link">` -}}
+    {{/* End TOC Build */}}
+    {{- if ne $numberOfPages 0 -}}
+      {{/* Combine child pages and sections to iterate over */}}
+      {{- .Scratch.Set "children" .Pages -}}
+      {{- if .Sections -}}
+        {{- .Scratch.Set "children" (.Pages | union .Sections) -}}
+      {{- end -}}
+      {{- $children := (.Scratch.Get "children") -}}
+      <li class="menu-item dropdown">
+        <a href="#" class="menu-link dropdown-toggle">{{ .Title }}</a>
+        <ul class="menu dropdown">
+          <li class="menu-item"><a href="{{ .RelPermalink }}" class="menu-link">Overview</a></li>
+          {{- range $children.ByWeight -}}
+          {{ template "game-nav-item" dict "activeNode" $activeNode "game" $game "nodeToProcess" . }}
+          {{- end -}}
+        </ul>
+      </li>
+    {{- else if (and (and $isActivePage $isPage) $toc) -}}
+      {{/* Only show TOC (if it exists) on single page, not on section index */}}
+      <li class="menu-item dropdown">
+        <a href="#" class="menu-link dropdown-toggle">{{ .Title}}</a>
+        {{ $toc | safeHTML }}
+      </li>
+    {{- else -}}
+      <li class="menu-item"><a href="{{ .RelPermalink}}" class="menu-link">{{ .Title}}</a></li>
+    {{- end -}}
+  {{- end -}}
+{{- end -}}

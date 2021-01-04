@@ -1,2 +1,53 @@
+// Global defaults
+$font-stack: Helvetica, sans-serif;
+$primary-color: #00b3b3;
+$primary-color-text: #FFF;
+$primary-color-light: #7fd9d9;
+$primary-color-hover: #6bd3d3;
+$secondary-color: b300b3;
+$secondary-color-text: #FFF;
+$secondary-color-light: d97fd9;
+$secondary-color-hover: d36bd3;
+$tertiary-color: b3b300;
+$tertiary-color-text: #FFF;
+$tertiary-color-light: d97fd9;
+$tertiary-color-hover: d3d36b;
+$site-nav-height: 4em;
+// Override Site variables from config
+{{ with .Site.Params.scss.site }}
+  {{ range $variable, $value := . }}
+    ${{ $variable}}: {{ $value }};
+  {{ end }}
+{{ end }}
+// Site SCSS
 @import 'site';
+// Blog SCSS
+// Store SCSS
+// Game Variables inherit from site unless overridden
+$game-nav-height: 4em;
+// Override game defaults from site config
+{{ with .Site.Params.scss.games }}
+  {{ range $variable, $value := . }}
+    ${{ $variable }}: {{ $value }};
+  {{ end }}
+{{ end }}
+// Game SCSS
 @import 'games';
+// Handle per-game override
+{{ $games := (.Site.GetPage "/games").Sections }}
+{{ range $games }}
+  // Override variable definitions
+  {{ $name := lower (urlize .Title) }}
+  {{ with .Params.scss }}
+    {{ range $variable, $value := . }}
+      ${{ $variable }}: {{ $value }};
+    {{ end }}
+    $name: "{{ $name }}";
+    // Import the general variable override
+    @import 'games/override';
+  {{ end }}
+  body > footer::after {
+    content: "{{ resources.Get (printf "scss/%v.scss" $name) }}";
+    color: $primary-color;
+  }
+{{ end }}

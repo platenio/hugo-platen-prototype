@@ -1,1 +1,12 @@
-@import 'games/nav'
+@import 'games/nav';
+
+article.game {
+  @media screen and (min-width: 1070px) {
+    width: 80%;
+    padding-left: 22em;
+  }
+  @media screen and (max-width: 1069px) {
+    padding-top: 3em;
+    width: 90%;
+  }
+}

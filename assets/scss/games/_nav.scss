@@ -1,40 +1,171 @@
-nav.game-nav {
-  // Container for the game sidebar nav
-  header {
-    // Container for the header information, separate from in-game navigation
-    a {
-      h1 {
-        // The game's title at the top of the navigation menu
-      }
-      img {
-        // The game's logo
-      }
+aside.game-nav {
+  margin-left: 0;
+  left: 0;
+  position: fixed;
+  height: 100%;
+  top: $site-nav-height;
+  z-index: 1;
+  float: left;
+  @media screen and (max-width: 1069px) {
+    height: $game-nav-height;
+
+    &.wide {
+      width: 100%;
     }
   }
-  ul {
-    // Container for the game's chapters, unordered
-    li {
-      // Container for each chapter
-      a {
-        // Link to each chapter
+  @media screen and (min-width: 1070px) {
+    width: 20em;
+    height: 100%;
+  }
+  nav#game-nav {
+    background-color: $primary-color;
+    color: $primary-color-text;
+    padding-left: 1em;
+
+    @media screen and (min-width: 1070px) {
+      height: 100%;
+    }
+
+    a {
+      color: $primary-color-text;
+      text-decoration: none;
+    }
+    /* Force accessible focus state */
+    * {
+      box-sizing: content-box;
+
+      &:focus {
+        background-color: $primary-color-light !important;
       }
-      ul {
-        // container for the game's subchapters, unordered
-        li {
-          // Container for each subchapter
-          a {
-            // Link to each subchapter
-          }
+    }
+
+    > .menu {
+      display: none;
+
+      &.show {
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+    }
+
+    button {
+      color: $primary-color-text;
+      background-color: $primary-color;
+    }
+
+    > .menu-toggle {
+      position: relative;
+      display: inline-block;
+      background: transparent;
+      border: 0;
+      font-size: 2rem;
+      padding: 0.5rem 2rem;
+    }
+
+    > .branding {
+      display: inline-block;
+      a {
+        font-size: 2rem;
+        display: inline-block;
+        padding: 0.5rem 2rem;
+      }
+      @media screen and (max-width: 1069px) {
+        display: none;
+      }
+    }
+
+    @media screen and (max-width: 1069px) {
+      > .menu {
+        width: 100%;
+      }
+    }
+
+    @media screen and (min-width: 1070px) {
+      > .menu {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+      }
+
+      > .menu-toggle {
+        display: none;
+      }
+    }
+
+    .visually-hidden {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    .menu {
+      background-color: $primary-color;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      &.show {
+        display: flex;
+        flex-direction: column;
+      }
+
+      &.dropdown {
+        display: none;
+        flex-direction: column;
+      }
+
+      .menu .menu-link {
+        padding-left: 3rem;
+      }
+
+      .menu .menu .menu-link {
+        padding-left: 4rem;
+      }
+
+      .menu-link,
+      .menu-toggle {
+        display: block;
+        background-color: $primary-color;
+        text-decoration: none;
+        border: none;
+        padding: 1rem 2rem;
+
+        &:hover {
+          background-color: $primary-color-hover;
         }
       }
-    }
-  }
-  ul.toc {
-    // Container for the table of contents for the active page
-    li {
-      // Container for each entry in the table of contents
-      a {
-        // Link to each entry in the table of contents
+
+      .menu-link:active {
+        background-color: $primary-color-light;
+      }
+
+      .menu-item {
+        position: relative;
+        width: 100%;
+
+        &.dropdown > .dropdown-toggle {
+          &[aria-expanded="true"]::after {
+            content: "⯈";
+            margin-left: 0.5rem;
+            display: inline-block;
+          }
+          &[aria-expanded="false"]::after {
+            content: "▼";
+            margin-left: 0.5rem;
+            display: inline-block;
+          }
+        }
+
+        .menu.dropdown.show {
+          display: flex;
+        }
       }
     }
   }

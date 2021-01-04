@@ -1,0 +1,39 @@
+main.#{$name} {
+  aside.game-nav {
+    nav#game-nav {
+      background-color: $primary-color;
+      color: $primary-color-text;
+
+      a {
+        color: $primary-color-text;
+      }
+      * {
+        &:focus {
+          background-color: $primary-color-light !important;
+        }
+      }
+
+      button {
+        color: $primary-color-text;
+        background-color: $primary-color;
+      }
+
+      .menu {
+        background-color: $primary-color;
+
+        .menu-link,
+        .menu-toggle {
+          background-color: $primary-color;
+
+          &:hover {
+            background-color: $primary-color-hover;
+          }
+        }
+
+        .menu-link:active {
+          background-color: $primary-color-light;
+        }
+      }
+    }
+  }
+}
