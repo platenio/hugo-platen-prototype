@@ -1,11 +1,7 @@
 {{ define "main" }}
-<aside class="game-nav">
-    {{- partial "games/nav.html" . -}}
-</aside>
-<article class="game">
     <header>
+        {{ partial "games/breadcrumbs" . }}
         <h1>{{ .Title }}</h1>
-        <!-- <p>{{ .IsDescendant (.GetPage "/games") }}</p> -->
         <blockquote>{{ .Description | markdownify }}</blockquote>
     </header>
     <figure>
@@ -18,9 +14,5 @@
     </figure>
     {{ .Content }}
     <footer>
-        {{ range .Pages }}
-        <a href="{{ .Permalink }}">{{ .Title }}</a>
-        {{ end }}
     </footer>
-</article>
 {{ end }}

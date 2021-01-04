@@ -10,7 +10,16 @@
     <body>
         {{- partial "site/header.html" . -}}
         <main id="content" class="{{ lower (urlize $game.Title) }}">
-        {{- block "main" . }}{{- end }}
+          <aside class="game-nav">
+            {{- partial "games/nav.html" . -}}
+          </aside>
+          <article class="game">
+            <header>
+              {{ partial "games/breadcrumbs" . }}
+              <h1>{{ .Title }}</h1>
+            </header>
+            {{- block "main" . }}{{- end }}
+          </article>
         </main>
         {{- partial "site/footer.html" . -}}
     </body>
