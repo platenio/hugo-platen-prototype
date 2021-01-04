@@ -1,0 +1,22 @@
+{{- $activeNode := . -}}
+<nav aria-label="Breadcrumb" class="breadcrumb">
+  <ol>
+    {{ template "breadcrumb-entry" dict "activeNode" . "nodeToProcess" . }}
+  </ol>
+</nav>
+
+{{- define "breadcrumb-entry" -}}
+  {{- $activeNode := .activeNode -}}
+  {{- $nodeToProcess := .nodeToProcess -}}
+  {{- $hasParent  := $nodeToProcess.Parent -}}
+  {{- with $nodeToProcess.Parent -}}
+    {{- template "breadcrumb-entry" dict "activeNode" $activeNode "nodeToProcess" . -}}
+  {{- end -}}
+  <li class="{{ $hasParent }}">
+    {{- if eq $activeNode.Title $nodeToProcess.Title -}}
+    <a href="{{ $nodeToProcess.RelPermalink }}" aria-current="page">{{ $nodeToProcess.Title }}</a>
+    {{- else -}}
+      <a href="{{ $nodeToProcess.RelPermalink }}">{{ $nodeToProcess.Title }}</a>
+    {{- end -}}
+  </li>
+{{- end -}}
