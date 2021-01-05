@@ -1,6 +1,16 @@
-{{ $name    := .Get 0 }}
-{{ $caption := .Get 1 }}
-{{ $type    := .Get 2 }}
+{{- if .IsNamedParams -}}
+  {{- $.Scratch.Set "name"    (.Get "name") -}}
+  {{- $.Scratch.Set "caption" (.Get "caption") -}}
+  {{- $.Scratch.Set "type"    (.Get "type") -}}
+{{- else -}}
+  {{- $.Scratch.Set "name"    (.Get 0) -}}
+  {{- $.Scratch.Set "caption" (.Get 1) -}}
+  {{- $.Scratch.Set "type"    (.Get 2) -}}
+{{- end -}}
+
+{{ $name    := $.Scratch.Get "name" }}
+{{ $caption := $.Scratch.Get "caption" }}
+{{ $type    := $.Scratch.Get "type" }}
 
 {{ $url := printf "static/tables/%s.csv" $name}}
 {{ $separator := "," }}
