@@ -33,6 +33,19 @@ function selectEntry(tableName, row, column) {
   setResultText(tableName);
 }
 
+function getRandomRow(tableName) {
+  var table   = getRollTable(tableName);
+  var rows    = table.rows.length;
+  var row = getRandomInteger(1,rows);
+  var columns = [...Array(table.rows[0].cells.length).keys()]
+  clearSelectedEntries(tableName);
+  for (let  column of columns) {
+    var entry = table.rows[row].cells[column];
+    entry.classList.add("selected");
+  }
+  setResultText(tableName);
+}
+
 function clearSelectedEntries(tableName, column=null) {
   var table = getRollTable(tableName);
   var selectedEntries = getSelectedEntries(tableName,column);

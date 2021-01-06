@@ -1,5 +1,9 @@
-{{- $icon   := .Get 0 -}}
-{{- with .Get 1}}{{- $.Scratch.Set "height" . -}}{{- else -}}{{- $.Scratch.Set "height" "1em" -}}{{- end -}}
-{{- with .Get 1}}{{- $.Scratch.Set "width" . -}}{{- else -}}{{- $.Scratch.Set "width" "1em" -}}{{- end -}}
+{{- if .IsNamedParams -}}
+  {{- $.Scratch.Set "icon"  (.Get "icon") -}}
+{{- else -}}
+  {{- $.Scratch.Set "icon"  (.Get 0) -}}
+{{- end -}}
+
+{{- $icon   := $.Scratch.Get "icon" -}}
+
 <img src="/icons/{{$icon}}.svg" alt="{{$icon}}" class="icons"/>
-<!-- <img src="/images/{{$icon}}.svg" alt="{{$icon}}" class="icons" style="height:{{$.Scratch.Get "height"}};width:{{$.Scratch.Get "width"}}"/> -->

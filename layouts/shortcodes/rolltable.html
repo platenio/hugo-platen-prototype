@@ -1,16 +1,27 @@
-{{ $name    := .Get 0 }}
-{{ $caption := .Get 1 }}
+{{- if .IsNamedParams -}}
+  {{- $.Scratch.Set "name"    (.Get "name") -}}
+  {{- $.Scratch.Set "caption" (.Get "caption") -}}
+  {{- $.Scratch.Set "type"    (.Get "type") -}}
+{{- else -}}
+  {{- $.Scratch.Set "name"    (.Get 0) -}}
+  {{- $.Scratch.Set "caption" (.Get 1) -}}
+  {{- $.Scratch.Set "type"    (.Get 2) -}}
+{{- end -}}
+
+{{ $name    := $.Scratch.Get "name" }}
+{{ $caption := $.Scratch.Get "caption" }}
+{{ $type    := $.Scratch.Get "type" }}
 
 {{ $url := printf "static/tables/%s.csv" $name}}
-{{ $sep := "," }}
-{{ $tabledata := getCSV $sep $url }}
+{{ $separator := "," }}
+{{ $tableData := getCSV $separator $url }}
 
 {{ $id := printf "rolltable-%s" (replace $name '/' '-')}}
 
-{{ $headers := first 1 $tabledata}}
+{{ $headers := first 1 $tableData}}
 {{ $headers := index $headers 0}}
 
-{{ $prefixes := after 1 $tabledata | first 1 }}
+{{ $prefixes := after 1 $tableData | first 1 }}
 {{ if lt 2 (len $prefixes) }}
   {{ $.Scratch.Set "prefixes" (index $prefixes 0) }}
 {{ else }}
@@ -27,31 +38,33 @@
   </caption>
   <thead>
     <tr>
-    {{ $.Scratch.Set "columncount" 0 }}
+    {{ $.Scratch.Set "columnCount" 0 }}
     {{ range $headers }}
-    {{ $column := $.Scratch.Get "columncount" }}
+    {{ $column := $.Scratch.Get "columnCount" }}
       {{if eq "result" (lower .) }}
-      <th onClick="getRandomEntries({{$name}})">{{ . }}</th>
+      {{ $function := (cond (eq $type "singular") "getRandomRow" "getRandomEntries") }}
+      {{ $function := printf `onClick=%v("%v")` $function $name | safeHTMLAttr }}
+      <th {{$function}}>{{ . }}</th>
       {{else}}
       <th onClick="getRandomEntry({{$name}},{{$column}})">{{ . }}</th>
       {{end}}
-    {{ $.Scratch.Set "columncount" (add $column 1) }}
+    {{ $.Scratch.Set "columnCount" (add $column 1) }}
     {{ end }}
     </tr>
   </thead>
   <tbody>
-  {{ $.Scratch.Set "rowcount" 1 }}
-  {{ range $data := after 2 $tabledata }}
-  {{ $row := $.Scratch.Get "rowcount" }}
-  {{ $.Scratch.Set "columncount" 0 }}
+  {{ $.Scratch.Set "rowCount" 1 }}
+  {{ range $data := after 2 $tableData }}
+  {{ $row := $.Scratch.Get "rowCount" }}
+  {{ $.Scratch.Set "columnCount" 0 }}
     <tr>
       {{ range $data }}
-      {{ $column := $.Scratch.Get "columncount" }}
-      <td onClick="selectEntry({{$name}},{{$.Scratch.Get "rowcount"}},{{$column}})" data-prefix="{{index ($.Scratch.Get "prefixes") (add $column -1)}}" >{{ . }}</td>
-      {{ $.Scratch.Set "columncount" (add $column 1) }}
+      {{ $column := $.Scratch.Get "columnCount" }}
+      <td onClick="selectEntry({{$name}},{{$.Scratch.Get "rowCount"}},{{$column}})" data-prefix="{{index ($.Scratch.Get "prefixes") (add $column -1)}}" >{{ . }}</td>
+      {{ $.Scratch.Set "columnCount" (add $column 1) }}
       {{ end }}
     </tr>
-  {{ $.Scratch.Set "rowcount" (add $row 1) }}
+  {{ $.Scratch.Set "rowCount" (add $row 1) }}
   {{ end }}
   </tbody>
 </table>
