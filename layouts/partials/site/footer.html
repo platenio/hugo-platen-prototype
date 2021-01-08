@@ -15,7 +15,7 @@
       submenuToggleSelector: ".dropdown-toggle",
       submenuSelector: ".menu.dropdown",
     };
-    const whitelistNavs = ["site-nav", "game-nav"]
+    const whitelistNavs = ["site-nav", "game-nav", "blog-nav"]
 
     navs.forEach(nav => {
       const menuElement = nav.querySelector(".menu");
@@ -27,11 +27,6 @@
           ...menuSettings,
           controllerElement,
           containerElement: nav
-        });
-      } else {
-        const menu = new AccessibleMenu.DisclosureMenu({
-          menuElement,
-          ...menuSettings
         });
       }
     });

@@ -1,0 +1,29 @@
+{{ define "main" }}
+  {{- $activeNode := . -}}
+  <h1>Recent Posts</h1>
+  {{- if eq .FirstSection . -}}
+    {{ range .Sections.ByDate.Reverse }}
+      {{ template "_internal/pagination.html" . }}
+      {{ range .Paginator.Pages }}
+        <section class="paginated-post">
+          <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+          {{ .Summary | markdownify }}
+          {{- if .Truncated -}}
+            <a href="{{ .RelPermalink }}" class="read-more">Read More...</a>
+          {{- end -}}
+        </section>
+      {{ end }}
+    {{ end }}
+  {{- else -}}
+    {{ template "_internal/pagination.html" . }}
+    {{ range .Paginator.Pages.ByDate.Reverse }}
+      <section class="paginated-post">
+        <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+        {{ .Summary | markdownify }}
+        {{- if .Truncated -}}
+          <a href="{{ .RelPermalink }}" class="read-more">Read More...</a>
+        {{- end -}}
+      </section>
+    {{ end }}
+  {{ end }}
+{{ end }}

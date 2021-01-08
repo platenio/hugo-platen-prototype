@@ -22,6 +22,14 @@ $site-nav-height: 4em;
 // Site SCSS
 @import 'site';
 // Blog SCSS
+$blog-nav-height: 4em;
+// Override blog defaults from site config
+{{ with .Site.Params.scss.blog }}
+  {{ range $variable, $value := . }}
+    ${{ $variable }}: {{ $value }};
+  {{ end }}
+{{ end }}
+@import 'blog';
 // Store SCSS
 // Game Variables inherit from site unless overridden
 $game-nav-height: 4em;

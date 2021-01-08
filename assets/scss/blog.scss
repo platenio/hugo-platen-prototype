@@ -1,0 +1,15 @@
+@import 'blog/nav';
+
+article.blog {
+  width: 90%;
+  @media screen and (min-width: 1070px) {
+    padding-left: 22em;
+  }
+  @media screen and (max-width: 1069px) {
+    padding-top: 3em;
+  }
+  h1 {
+    font-size: 3em;
+    text-align: center;
+  }
+}

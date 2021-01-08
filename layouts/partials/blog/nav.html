@@ -1,0 +1,86 @@
+{{- $activeNode := . -}}
+{{/* Find the current game so only that game's nav menu is displayed when selected*/}}
+{{- $blog := .GetPage .Section -}}
+<nav id="blog-nav" aria-label="Blog Post Navigation {{$blog}}">
+  {{ template "blog-nav-menu" dict "activeNode" $activeNode "blog" $blog -}}
+  <footer>
+    <script>
+      var blogNavButton = document.querySelector('nav#blog-nav > button');
+      var blogNavAside = document.querySelector('aside.blog-nav');
+      blogNavButton.addEventListener("click", function(){
+        if (this.ariaExpanded === "true") {
+          blogNavAside.classList.add("wide");
+        } else {
+          blogNavAside.classList.remove("wide");
+        }
+      });
+    </script>
+  </footer>
+</nav>
+
+{{- define "blog-nav-menu" -}}
+  {{- $activeNode := .activeNode -}}
+  {{- $blog       := .blog -}}
+  {{- with $blog -}}
+    {{/* Combine child pages and sections to iterate over */}}
+    {{- .Scratch.Set "children" .Pages -}}
+    {{- if .Sections -}}
+      {{- .Scratch.Set "children" .Sections -}}
+    {{- end -}}
+    {{ $children := (.Scratch.Get "children") }}
+    <button href="" class="menu-toggle"><i class="fa fa-book"></i><span class="visually-hidden"> Toggle Blog Menu</span></button>
+    <span class="branding" aria-hidden="true"><a href="{{ .RelPermalink }}" title="{{ .Title }}">{{ .Title }}</a></span>
+    <ul id="blog-nav-list" class="menu">
+      <li class="menu-item"><a href="{{ .RelPermalink}}" class="menu-link">Most Recent Posts</a></li>
+      {{- range $children.ByDate.Reverse -}}
+        {{ template "blog-nav-item" dict "activeNode" $activeNode "blog" $blog "nodeToProcess" . }}
+      {{- end -}}
+    </ul>
+  {{- end -}}
+{{- end -}}
+
+{{- define "blog-nav-item" -}}
+  {{- $activeNode := .activeNode -}}
+  {{- $blog       := .blog -}}
+  {{- with .nodeToProcess -}}
+    {{- $isActivePage  := eq $activeNode.Title .Title -}}
+    {{- $isPage        := eq .Kind "page" -}}
+    {{- $numberOfPages := (add (len .Pages) (len .Sections)) -}}
+    {{/* Build TOC */}}
+      {{/* Strip uneccesary nav*/}}
+      {{- $toc    := .TableOfContents | replaceRE `<nav id="TableOfContents">` "" | replaceRE "</nav>" "" -}}
+      {{/* Add menu dropdown classes to ul*/}}
+      {{- $topTOC := printf "<ul class=%v>" `"menu dropdown"` -}}
+      {{- $toc    := $toc | replaceRE "<ul>" $topTOC -}}
+      {{/* Add menu-item class to li*/}}
+      {{- $toc    := $toc | replaceRE "<li>" `<li class="menu-item">` -}}
+      {{/* Add menu-link class to a*/}}
+      {{- $toc    := $toc | replaceRE `<a href=?(".*")>` `<a href=$1 class="menu-link">` -}}
+    {{/* End TOC Build */}}
+    {{- if ne $numberOfPages 0 -}}
+      {{/* Combine child pages and sections to iterate over */}}
+      {{- .Scratch.Set "children" .Pages -}}
+      {{- if .Sections -}}
+        {{- .Scratch.Set "children" (.Pages | union .Sections) -}}
+      {{- end -}}
+      {{- $children := (.Scratch.Get "children") -}}
+      <li class="menu-item dropdown">
+        <a href="#" class="menu-link dropdown-toggle">{{ .Title }}</a>
+        <ul class="menu dropdown">
+          <li class="menu-item"><a href="{{ .RelPermalink }}" class="menu-link">Posts</a></li>
+          {{- range $children.ByWeight -}}
+          {{ template "blog-nav-item" dict "activeNode" $activeNode "blog" $blog "nodeToProcess" . }}
+          {{- end -}}
+        </ul>
+      </li>
+    {{- else if (and (and $isActivePage $isPage) $toc) -}}
+      {{/* Only show TOC (if it exists) on single page, not on section index */}}
+      <li class="menu-item dropdown">
+        <a href="#" class="menu-link dropdown-toggle">{{ .Title}}</a>
+        {{ $toc | safeHTML }}
+      </li>
+    {{- else -}}
+      <li class="menu-item"><a href="{{ .RelPermalink}}" class="menu-link">{{ .Title}}</a></li>
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
