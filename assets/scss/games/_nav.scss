@@ -41,11 +41,16 @@ aside.game-nav {
 
     > .menu {
       display: none;
+      font-weight: bold;
 
       &.show {
         flex-direction: column;
         flex-wrap: wrap;
         align-items: center;
+      }
+
+      &.current {
+        background-color: $secondary-color;
       }
     }
 

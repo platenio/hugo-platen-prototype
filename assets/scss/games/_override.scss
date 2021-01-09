@@ -20,6 +20,13 @@ main.#{$name} {
 
       .menu {
         background-color: $primary-color;
+        &.current {
+          background-color: $primary-color-light;
+          .menu-link,
+          .menu-toggle {
+            background-color: $primary-color-light;
+          }
+        }
 
         .menu-link,
         .menu-toggle {

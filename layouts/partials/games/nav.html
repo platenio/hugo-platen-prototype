@@ -47,13 +47,14 @@
   {{- $game       := .game -}}
   {{- with .nodeToProcess -}}
     {{- $isActivePage  := eq $activeNode.Title .Title -}}
+    {{- $isActivePageAncestor := .IsAncestor $activeNode -}}
     {{- $isPage        := eq .Kind "page" -}}
     {{- $numberOfPages := (add (len .Pages) (len .Sections)) -}}
     {{/* Build TOC */}}
       {{/* Strip uneccesary nav*/}}
       {{- $toc    := .TableOfContents | replaceRE `<nav id="TableOfContents">` "" | replaceRE "</nav>" "" -}}
       {{/* Add menu dropdown classes to ul*/}}
-      {{- $topTOC := printf "<ul class=%v>" `"menu dropdown"` -}}
+      {{- $topTOC := printf "<ul class=%v" `"menu dropdown current"` -}}
       {{- $toc    := $toc | replaceRE "<ul>" $topTOC -}}
       {{/* Add menu-item class to li*/}}
       {{- $toc    := $toc | replaceRE "<li>" `<li class="menu-item">` -}}
@@ -69,7 +70,7 @@
       {{- $children := (.Scratch.Get "children") -}}
       <li class="menu-item dropdown">
         <a href="#" class="menu-link dropdown-toggle">{{ .Title }}</a>
-        <ul class="menu dropdown">
+        <ul class="{{ cond $isActivePageAncestor "menu dropdown current" "menu dropdown" }}">
           <li class="menu-item"><a href="{{ .RelPermalink }}" class="menu-link">Overview</a></li>
           {{- range $children.ByWeight -}}
           {{ template "game-nav-item" dict "activeNode" $activeNode "game" $game "nodeToProcess" . }}

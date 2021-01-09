@@ -110,6 +110,7 @@ aside.blog-nav {
       list-style: none;
       padding: 0;
       margin: 0;
+      font-weight: bold;
 
       &.show {
         display: flex;
@@ -139,6 +140,14 @@ aside.blog-nav {
 
         &:hover {
           background-color: $primary-color-hover;
+        }
+      }
+
+      &.current {
+        background-color: $primary-color-light;
+        .menu-link,
+        .menu-toggle {
+          background-color: $primary-color-light;
         }
       }
 
