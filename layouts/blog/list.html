@@ -49,7 +49,7 @@
 {{- $pageNumber  := $pager.PageNumber -}}
 {{- $ariaCurrent := eq $pager $paginator -}}
 <li>
-  <a href="{{ $pager.URL }}" aria-label="Goto Page {{ $pageNumber }}" {{ $ariaCurrent }}>
+  <a href="{{ $pager.URL }}" aria-label="Goto Page {{ $pageNumber }}" aria-current="{{ $ariaCurrent }}">
     {{ $pageNumber }}
   </a>
 </li>

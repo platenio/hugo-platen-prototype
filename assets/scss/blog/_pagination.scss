@@ -1,4 +1,5 @@
 nav.pagination {
+  margin-top: 4em;
   ul {
     list-style: none;
     display: flex;
@@ -7,8 +8,18 @@ nav.pagination {
     // align-items: center;
     justify-content: center;
     li {
-      padding: 1em;
       a {
+        padding: 1em;
+        margin: 0 .5em;
+        &[aria-current="true"] {
+          font-weight: bold;
+          background-color: $primary-color;
+          color: $primary-color-text;
+        }
+        &:hover {
+          background-color: $primary-color-hover;
+          color: $primary-color-text;
+        }
         &[aria-disabled="true"] {
           color: gray;
           text-decoration: none;
