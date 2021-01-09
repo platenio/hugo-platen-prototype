@@ -1,4 +1,4 @@
-aside.game-nav {
+aside.blog-nav {
   margin-left: 0;
   left: 0;
   position: fixed;
@@ -7,7 +7,7 @@ aside.game-nav {
   z-index: 1;
   float: left;
   @media screen and (max-width: 1069px) {
-    height: $game-nav-height;
+    height: $blog-nav-height;
 
     &.wide {
       width: 100%;
@@ -17,7 +17,7 @@ aside.game-nav {
     width: 20em;
     height: 100%;
   }
-  nav#game-nav {
+  nav#blog-nav {
     background-color: $primary-color;
     color: $primary-color-text;
     padding-left: 1em;
@@ -41,16 +41,11 @@ aside.game-nav {
 
     > .menu {
       display: none;
-      font-weight: bold;
 
       &.show {
         flex-direction: column;
         flex-wrap: wrap;
         align-items: center;
-      }
-
-      &.current {
-        background-color: $secondary-color;
       }
     }
 
@@ -115,6 +110,7 @@ aside.game-nav {
       list-style: none;
       padding: 0;
       margin: 0;
+      font-weight: bold;
 
       &.show {
         display: flex;
@@ -144,6 +140,14 @@ aside.game-nav {
 
         &:hover {
           background-color: $primary-color-hover;
+        }
+      }
+
+      &.current {
+        background-color: $primary-color-light;
+        .menu-link,
+        .menu-toggle {
+          background-color: $primary-color-light;
         }
       }
 

@@ -15,26 +15,31 @@
       submenuToggleSelector: ".dropdown-toggle",
       submenuSelector: ".menu.dropdown",
     };
-    const whitelistNavs = ["site-nav", "game-nav"]
+    const whitelistNavs = ["site-nav", "game-nav", "blog-nav"]
+
+    function openMenuItem(element) {
+      element.classList.remove("hide");
+      element.classList.add("show");
+      element.setAttribute("aria-expanded", true);
+    }
 
     navs.forEach(nav => {
       const menuElement = nav.querySelector(".menu");
 
       if (whitelistNavs.includes(nav.id)) {
         const controllerElement = nav.querySelector(".menu-toggle");
+        <!-- const lists = nav.querySelectorAll(ul[role=menubar]) -->
         const menu = new AccessibleMenu.Menubar({
           menuElement,
           ...menuSettings,
           controllerElement,
           containerElement: nav
         });
-      } else {
-        const menu = new AccessibleMenu.DisclosureMenu({
-          menuElement,
-          ...menuSettings
-        });
+        const currentTreeElements = nav.querySelectorAll("ul.current");
+        for (let element of currentTreeElements) {
+          openMenuItem(element);
+        }
       }
     });
-
   </script>
 </footer>

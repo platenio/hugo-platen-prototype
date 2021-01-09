@@ -4,14 +4,14 @@ $primary-color: #00b3b3;
 $primary-color-text: #FFF;
 $primary-color-light: #7fd9d9;
 $primary-color-hover: #6bd3d3;
-$secondary-color: b300b3;
+$secondary-color: #b300b3;
 $secondary-color-text: #FFF;
-$secondary-color-light: d97fd9;
-$secondary-color-hover: d36bd3;
-$tertiary-color: b3b300;
+$secondary-color-light: #d97fd9;
+$secondary-color-hover: #d36bd3;
+$tertiary-color: #b3b300;
 $tertiary-color-text: #FFF;
-$tertiary-color-light: d97fd9;
-$tertiary-color-hover: d3d36b;
+$tertiary-color-light: #d9d97f;
+$tertiary-color-hover: #d3d36b;
 $site-nav-height: 4em;
 // Override Site variables from config
 {{ with .Site.Params.scss.site }}
@@ -22,6 +22,14 @@ $site-nav-height: 4em;
 // Site SCSS
 @import 'site';
 // Blog SCSS
+$blog-nav-height: 4em;
+// Override blog defaults from site config
+{{ with .Site.Params.scss.blog }}
+  {{ range $variable, $value := . }}
+    ${{ $variable }}: {{ $value }};
+  {{ end }}
+{{ end }}
+@import 'blog';
 // Store SCSS
 // Game Variables inherit from site unless overridden
 $game-nav-height: 4em;
