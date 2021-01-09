@@ -1,29 +1,68 @@
 {{ define "main" }}
-  {{- $activeNode := . -}}
   <h1>Recent Posts</h1>
-  {{- if eq .FirstSection . -}}
-    {{ range .Sections.ByDate.Reverse }}
-      {{ template "_internal/pagination.html" . }}
-      {{ range .Paginator.Pages }}
-        <section class="paginated-post">
-          <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-          {{ .Summary | markdownify }}
-          {{- if .Truncated -}}
-            <a href="{{ .RelPermalink }}" class="read-more">Read More...</a>
-          {{- end -}}
-        </section>
-      {{ end }}
+  {{/* If you're at the blog root, grab all the blog posts, otherwise just this section's */}}
+  {{if eq .FirstSection . }}
+    {{- $paginator := .Paginate (where .Site.RegularPages "Section" "blog") -}}
+    {{ range $paginator.Pages }}
+      {{ template "previewCard" . }}
     {{ end }}
-  {{- else -}}
-    {{ template "_internal/pagination.html" . }}
-    {{ range .Paginator.Pages.ByDate.Reverse }}
-      <section class="paginated-post">
-        <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-        {{ .Summary | markdownify }}
-        {{- if .Truncated -}}
-          <a href="{{ .RelPermalink }}" class="read-more">Read More...</a>
-        {{- end -}}
-      </section>
+    {{- if gt $paginator.TotalPages $paginator.Pages -}}
+      {{ template "paginationNav" dict "paginator" $paginator }}
+    {{- end -}}
+  {{else}}
+    {{- $paginator := .Paginator}}
+    {{ range $paginator.Pages }}
+      {{ template "previewCard" . }}
     {{ end }}
-  {{ end }}
+    {{- if gt $paginator.TotalPages $paginator.Pages -}}
+      {{ template "paginationNav" dict "paginator" $paginator }}
+    {{- end -}}
+  {{end}}
 {{ end }}
+
+{{- define "previewCard" -}}
+<section class="paginated-post">
+  <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+  {{ .Summary | markdownify }}
+  {{- if .Truncated -}}
+    <a href="{{ .RelPermalink }}" class="read-more">Read More...</a>
+  {{- end -}}
+</section>
+{{- end -}}
+
+{{- define "paginationNav" -}}
+{{- $paginator   := .paginator -}}
+<nav aria-label="Blog Pagination Navigation" class="pagination">
+  <ul>
+    {{ template "paginationControl" dict "type" "previous" "active" $paginator.HasPrev "pager" $paginator.Prev }}
+    {{- range $paginator.Pagers -}}
+      {{ template "paginationItem" dict "paginator" $paginator "pager" . }}
+    {{- end -}}
+    {{ template "paginationControl" dict "type" "next" "active" $paginator.HasNext "pager" $paginator.Next }}
+  </ul>
+</nav>
+{{- end -}}
+
+{{- define "paginationItem" -}}
+{{- $paginator   := .paginator -}}
+{{- $pager       := .pager -}}
+{{- $pageNumber  := $pager.PageNumber -}}
+{{- $ariaCurrent := eq $pager $paginator -}}
+<li>
+  <a href="{{ $pager.URL }}" aria-label="Goto Page {{ $pageNumber }}" {{ $ariaCurrent }}>
+    {{ $pageNumber }}
+  </a>
+</li>
+{{- end -}}
+
+{{- define "paginationControl" -}}
+  {{- $type := .type -}}
+  {{- $active := .active -}}
+  {{- $pager := .pager -}}
+  {{- $iconClass := cond (eq $type "previous") "fa fa-step-backward" "fa fa-step-forward"}}
+  {{- if $active -}}
+    <li><a href="{{ $pager.URL }}" aria-label="Goto {{ $type }} page"><i class="{{ $iconClass }}"></i></a></li>
+  {{- else -}}
+    <li><a aria-disabled="true" aria-label="Goto {{ $type }} page"><i class="{{ $iconClass }}"></i></a></li>
+  {{- end -}}
+{{- end -}}

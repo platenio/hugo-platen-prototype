@@ -1,0 +1,20 @@
+nav.pagination {
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    // align-items: center;
+    justify-content: center;
+    li {
+      padding: 1em;
+      a {
+        &[aria-disabled="true"] {
+          color: gray;
+          text-decoration: none;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+}
