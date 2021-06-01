@@ -3,11 +3,11 @@ aside.blog-nav {
   left: 0;
   position: fixed;
   height: 100%;
-  top: $site-nav-height;
+  top: var(--site-nav-height);
   z-index: 1;
   float: left;
   @media screen and (max-width: 1069px) {
-    height: $blog-nav-height;
+    height: var(--blog-nav-height);
 
     &.wide {
       width: 100%;
@@ -18,8 +18,8 @@ aside.blog-nav {
     height: 100%;
   }
   nav#blog-nav {
-    background-color: $primary-color;
-    color: $primary-color-text;
+    background-color: var(--primary-color);
+    color: var(--primary-color-text);
     padding-left: 1em;
 
     @media screen and (min-width: 1070px) {
@@ -27,7 +27,7 @@ aside.blog-nav {
     }
 
     a {
-      color: $primary-color-text;
+      color: var(--primary-color-text);
       text-decoration: none;
     }
     /* Force accessible focus state */
@@ -35,7 +35,7 @@ aside.blog-nav {
       box-sizing: content-box;
 
       &:focus {
-        background-color: $primary-color-light !important;
+        background-color: var(--primary-color-light) !important;
       }
     }
 
@@ -50,8 +50,8 @@ aside.blog-nav {
     }
 
     button {
-      color: $primary-color-text;
-      background-color: $primary-color;
+      color: var(--primary-color-text);
+      background-color: var(--primary-color);
     }
 
     > .menu-toggle {
@@ -106,7 +106,7 @@ aside.blog-nav {
     }
 
     .menu {
-      background-color: $primary-color;
+      background-color: var(--primary-color);
       list-style: none;
       padding: 0;
       margin: 0;
@@ -133,26 +133,26 @@ aside.blog-nav {
       .menu-link,
       .menu-toggle {
         display: block;
-        background-color: $primary-color;
+        background-color: var(--primary-color);
         text-decoration: none;
         border: none;
         padding: 1rem 2rem;
 
         &:hover {
-          background-color: $primary-color-hover;
+          background-color: var(--primary-color-hover);
         }
       }
 
       &.current {
-        background-color: $primary-color-light;
+        background-color: var(--primary-color-light);
         .menu-link,
         .menu-toggle {
-          background-color: $primary-color-light;
+          background-color: var(--primary-color-light);
         }
       }
 
       .menu-link:active {
-        background-color: $primary-color-light;
+        background-color: var(--primary-color-light);
       }
 
       .menu-item {
