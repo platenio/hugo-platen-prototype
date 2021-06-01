@@ -1,0 +1,13 @@
+{{- if .IsNamedParams -}}
+  {{- $.Scratch.Set "title" (.Get "title") -}}
+{{- else -}}
+  {{- $.Scratch.Set "title" (.Get 0) -}}
+{{- end -}}
+
+{{- $title  := $.Scratch.Get "title" -}}
+{{- $anchor := urlize $title -}}
+
+<details class="warning">
+  <summary id="content-warning-{{ $anchor }}">Content Warning: {{ $title }}</summary>
+  {{ .Inner | markdownify }}
+</details>
