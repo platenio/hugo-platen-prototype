@@ -6,8 +6,8 @@
   {{- $.Scratch.Set "title" (.Get 1) -}}
 {{- end -}}
 
-{{- $type := $.Scratch.Get "type" -}}
-{{- $title := $.Scratch.Get "title" -}}
+{{- $type   := $.Scratch.Get "type" -}}
+{{- $title  := $.Scratch.Get "title" -}}
 {{- $anchor := urlize $title -}}
 
 <details class="{{ $type }}">
