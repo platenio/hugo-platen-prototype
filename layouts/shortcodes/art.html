@@ -10,7 +10,7 @@
 
 {{- $src     := $.Scratch.Get "src" -}}
 {{- $alt     := $.Scratch.Get "alt" | default nil -}}
-{{- $class     := $.Scratch.Get "class" | default "full" -}}
+{{- $class   := $.Scratch.Get "class" | default "full" -}}
 {{- $caption := .Inner | default nil -}}
 
 {{- if eq $alt nil -}}

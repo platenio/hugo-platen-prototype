@@ -10,15 +10,15 @@ nav.pagination {
     li {
       a {
         padding: 1em;
-        margin: 0 .5em;
+        margin: 0 0.5em;
         &[aria-current="true"] {
           font-weight: bold;
-          background-color: $primary-color;
-          color: $primary-color-text;
+          background-color: var(--primary-color);
+          color: var(--primary-color-text);
         }
         &:hover {
-          background-color: $primary-color-hover;
-          color: $primary-color-text;
+          background-color: var(--primary-color-hover);
+          color: var(--primary-color-text);
         }
         &[aria-disabled="true"] {
           color: gray;

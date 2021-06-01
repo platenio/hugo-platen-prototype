@@ -1,44 +1,44 @@
 main.#{$name} {
   aside.game-nav {
     nav#game-nav {
-      background-color: $primary-color;
-      color: $primary-color-text;
+      background-color: var(--primary-color);
+      color: var(--primary-color-text);
 
       a {
-        color: $primary-color-text;
+        color: var(--primary-color-text);
       }
       * {
         &:focus {
-          background-color: $primary-color-light !important;
+          background-color: var(--primary-color-light) !important;
         }
       }
 
       button {
-        color: $primary-color-text;
-        background-color: $primary-color;
+        color: var(--primary-color-text);
+        background-color: var(--primary-color);
       }
 
       .menu {
-        background-color: $primary-color;
+        background-color: var(--primary-color);
         &.current {
-          background-color: $primary-color-light;
+          background-color: var(--primary-color-light);
           .menu-link,
           .menu-toggle {
-            background-color: $primary-color-light;
+            background-color: var(--primary-color-light);
           }
         }
 
         .menu-link,
         .menu-toggle {
-          background-color: $primary-color;
+          background-color: var(--primary-color);
 
           &:hover {
-            background-color: $primary-color-hover;
+            background-color: var(--primary-color-hover);
           }
         }
 
         .menu-link:active {
-          background-color: $primary-color-light;
+          background-color: var(--primary-color-light);
         }
       }
     }

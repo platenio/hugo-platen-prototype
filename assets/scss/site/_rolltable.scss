@@ -3,31 +3,31 @@ table.rolltable {
   th {
     text-align: center;
     font-weight: bold;
-    background-color: $primary-color;
-    color: $primary-color-text;
+    background-color: var(--primary-color);
+    color: var(--primary-color-text);
   }
   th:hover,
   td:hover {
-    background-color: $primary-color-hover;
-    color: $primary-color-text;
+    background-color: var(--primary-color-hover);
+    color: var(--primary-color-text);
   }
   td {
     text-align: center;
     border: 0;
     &.selected {
-      background-color: $primary-color;
-      color: $primary-color-text;
+      background-color: var(--primary-color);
+      color: var(--primary-color-text);
       font-weight: bold;
     }
   }
   tr:nth-child(even) {
-    background-color: $primary-color-light;
+    background-color: var(--primary-color-light);
   }
 
   caption {
     button {
       padding: 5px;
-      color: $primary-color-hover;
+      color: var(--primary-color-hover);
       float: left;
       left: 10px;
     }

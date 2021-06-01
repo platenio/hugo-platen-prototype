@@ -1,11 +1,11 @@
-@import 'site/nav';
-@import 'site/icons';
-@import 'site/details';
-@import 'site/rolltable';
-@import 'site/art';
+@import "site/nav";
+@import "site/icons";
+@import "site/details";
+@import "site/rolltable";
+@import "site/art";
 
 html {
-  font-family: $font-stack;
+  font-family: var(--font-stack);
   font-size: 1rem;
   line-height: 1.2rem;
 }
@@ -22,7 +22,7 @@ footer {
 main {
   width: 100%;
   min-height: 100vh;
-  padding-top: $site-nav-height;
+  padding-top: var(--site-nav-height);
 
   @media screen and (min-width: 1070px) {
     width: 80%;
